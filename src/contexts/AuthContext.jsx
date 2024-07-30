@@ -25,9 +25,18 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   const value = {
-    signUp: (data) => supabase.auth.signUp(data),
-    signIn: (data) => supabase.auth.signInWithPassword(data),
-    signOut: () => supabase.auth.signOut(),
+    signUp: async (data) => {
+      const { error } = await supabase.auth.signUp(data)
+      if (error) throw error
+    },
+    signIn: async (data) => {
+      const { error } = await supabase.auth.signInWithPassword(data)
+      if (error) throw error
+    },
+    signOut: async () => {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+    },
     user,
     session
   }
